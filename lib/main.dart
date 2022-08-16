@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_desktop_download_play/download/DownloadPage.dart';
+import 'package:flutter_desktop_download_play/pdf/DownloadAndReadPDF.dart';
 import 'package:flutter_desktop_download_play/play/AudioPlayerPage.dart';
 
 void main() {
@@ -36,6 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<Widget> _children = [
     DownloadPage(),
     AudioPlayerPage(),
+    DownloadAndReadPDF()
   ];
 
   late PageController _pageController;
@@ -81,6 +83,17 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Colors.amber,
             ),
             label: 'Play',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.chrome_reader_mode_outlined,
+              color: Colors.amber,
+            ),
+            activeIcon: Icon(
+              Icons.chrome_reader_mode,
+              color: Colors.amber,
+            ),
+            label: 'Read',
           ),
         ],
         onTap: onTabTapped,
