@@ -32,19 +32,22 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
 
       var directory = Directory(dir.path + "/audios/");
 
-      List<UriAudioSource> audioSources = directory
-          .listSync()
-          .where((element) => element.path.toString().contains(".mp3"))
-          .map((element) => AudioSource.uri(Uri.file(element.path),
-              tag: basename(element.path).replaceAll(".mp3", "")))
-          .toList();
-      audioSources.sort((a, b) => int.parse(a.tag.replaceAll(".mp3", ""))
-          .compareTo(int.parse(b.tag.replaceAll(".mp3", ""))));
+      if (Platform.isWindows) {
+        final filePath = dir.path + "/audios/" + surahList[0].fileName;
+        print(filePath);
+        player.setFilePath(filePath);
+      } else {
+        List<UriAudioSource> audioSources = directory
+            .listSync()
+            .where((element) => element.path.toString().contains(".mp3"))
+            .map((element) => AudioSource.uri(Uri.file(element.path),
+                tag: basename(element.path).replaceAll(".mp3", "")))
+            .toList();
+        audioSources.sort((a, b) => int.parse(a.tag.replaceAll(".mp3", ""))
+            .compareTo(int.parse(b.tag.replaceAll(".mp3", ""))));
 
-      player.setAudioSource(ConcatenatingAudioSource(children: audioSources));
-      // final filePath = dir.path + "/audios/" + items[0].fileName;
-      // print(filePath);
-      // player.setFilePath(filePath);
+        player.setAudioSource(ConcatenatingAudioSource(children: audioSources));
+      }
     });
   }
 
